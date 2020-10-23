@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <title>Document</title>
+</head>
+<body>
+    <div id="game">
+        <div  class="flex"><div id="power">10</div><div id="pps">(0 per sec)</div><div id="members">0</div></div>
+        <br/>
+        <br/>
+        <!-- <nav>
+            <ul>
+                <li>Cult</li>
+                <li>Rituals</li>
+                <li>Magic</li>
+            </ul>
+        </nav> -->
+        <div id="columns" class="flex">
+            <div id="demon" class="column">
+                <h2>Demon</h2>
+                <div class="demon-stat">Rank: <span id="drank">Lesser Demon</span></div>
+                <div class="demon-stat">Power: <span id="dpower">10/1000</span></div>
+                <br/>
+                <img src="./img/demon.svg" alt="">
+                <br/>
+                <button id="addpower">More power</button>
+            </div>
+            <div id="upgrades" class="column">
+                <h2>Cult</h2>
+            </div>
+            <br/>
+            <!-- <div class="progress-bar">
+                <div class="progress-curr" style="width: 30%"></div>
+                <span class="progress-text">Recruiting ... 1.2 sec</span>
+            </div> -->
+            <div id="rituals" class="column">
+                <h2>Rituals</h2>
+                <div>Available ritualists: <span id="avail_rit">5/5</span></div>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="dist/main.js"></script>
+</body>
+</html>

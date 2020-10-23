@@ -1,0 +1,100 @@
+body {
+    background-color: black;
+    color: #eee;
+    font-family: Lato;
+}
+
+.flex {
+    display: flex;
+}
+
+.column {
+    margin-right: 50px;
+}
+
+#upgrades, #rituals {
+    width: 25%;
+    /* border: 1px solid burlywood; */
+}
+
+.upg {
+    /* border: 1px solid burlywood; */
+    /* width: 20%; */
+    padding: 15px;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.upg-name {
+    width: 40%;
+}
+
+.upg-lvl {
+    width: 20%;
+}
+
+.upg > div {
+    
+}
+
+.upg > button {
+    width: 40%;
+}
+
+.progress-bar {
+    position: relative;
+    background-color: blue;
+    width: 40%;
+    height: 40px;
+    cursor: pointer;
+    /* border-radius: 5px; */
+}
+
+.progress-curr {
+    background-color: darkcyan;
+    height: 100%;
+    border-radius: inherit;
+}
+
+.progress-text {
+    position: absolute;
+    top: 2px;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+}
+
+#demon {
+    text-align: center;
+}
+
+h2 {
+    padding-bottom: 15px;
+    border-bottom: 1px solid red;
+    text-align: center;
+}
+
+#demon > img {
+    width: 200px;
+    display: block;
+}
+
+#demon > button {
+    width: 150px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.demon-stat {
+    text-align: left;
+    padding-bottom: 5px;
+}
+
+#tooltip {
+    border: 1px solid white;
+    padding: 10px;
+}
+
+.alloc-nb {
+    padding: 0px 10px;
+}

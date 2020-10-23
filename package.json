@@ -1,0 +1,37 @@
+{
+  "name": "demoncult",
+  "version": "0.1.0",
+  "description": "Demon cult - idle game",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack serve",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deniauma/DemonCultIdle.git"
+  },
+  "keywords": [
+    "Demon",
+    "cult"
+  ],
+  "author": "Mathieu Deniaud",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/deniauma/DemonCultIdle/issues"
+  },
+  "homepage": "https://github.com/deniauma/DemonCultIdle#readme",
+  "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "babel-loader": "^8.1.0",
+    "webpack": "^5.1.3",
+    "webpack-cli": "^4.1.0",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.5.3"
+  }
+}
