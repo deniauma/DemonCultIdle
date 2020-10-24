@@ -33,7 +33,7 @@ class Game {
         let new_time = window.performance.now();
         let frame_time = new_time - this.current_time;
         if (frame_time > 10000) {
-            alert('You were offline for ' + frame_time/1000 + " sec!");
+            console.log('You were offline for ' + frame_time/1000 + " sec!");
         }
         this.current_time = new_time;
         this.accumulator += frame_time;

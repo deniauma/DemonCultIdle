@@ -93,7 +93,22 @@ h2 {
 #tooltip {
     border: 1px solid white;
     padding: 10px;
+    z-index: 100;
+    background-color: lightslategray;
 }
+
+#tooltip > p {
+    margin: 3px 0px;
+}
+
+#tooltip > p:last-of-type {
+    margin-top: 10px;
+}
+
+#tooltip > ul {
+    margin: 3px 0px;
+}
+
 
 .alloc-nb {
     padding: 0px 10px;

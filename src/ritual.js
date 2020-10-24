@@ -1,6 +1,6 @@
 import DEMON from './demon.js'
 import CULT from './cult.js'
-import { createPopper } from '@popperjs/core' // import { createPopper } from 'https://unpkg.com/@popperjs/core@2.5.3/dist/esm/popper.js'
+import { createPopper } from '@popperjs/core'
 
 
 class Ritual {
@@ -68,7 +68,11 @@ class Ritual {
         if(bool) {
             let el = document.createElement("div");
             el.id = "tooltip";
-            el.innerHTML = "Tooltip for ritual "+ this.name;
+            el.innerHTML = '<p>' + this.name + " requires:</p>"
+                + '<ul><li>'+ this.ritualists_alloc +' / '+ this.ritualists_req +' ritualist(s)</li></ul>'
+                + '<p>Cost:</p>'
+                + '<ul><li>'+ DEMON.power + ' / ' +this.power_cost +' power</li>'
+                + '<li>'+ CULT.members[this.sacrifice_type].total + ' / ' + this.sacrifices +' ' + this.sacrifice_type +'(s)</li></ul>';
             document.getElementById('game').append(el);
             createPopper(document.getElementById('rit'+ this.id +'-do'), document.getElementById('tooltip'), {
                 placement: 'right',
@@ -84,7 +88,6 @@ class Ritual {
         } else {
             document.getElementById('tooltip').remove();
         }
-        
     }
 
     render() {
@@ -109,14 +112,21 @@ class SacrificeI extends Ritual {
 }
 
 
+class SacrificeII extends Ritual {
+    constructor() {
+        super("Adept sacrifice", 500, "adept", 1, 3);
+    }
+
+}
+
+
 class Rituals {
     constructor() {
         this.allocated_ritualists = 0;
         this.max_ritualists = 0;
         this.rituals = [];
         this.rituals.push(new SacrificeI());
-        this.rituals.push(new Ritual("Adept trans", 300, "adept", 3, 2));
-        DEMON.power_cap = 2000;
+        this.rituals.push(new SacrificeII());
     }
 
     render() {

@@ -1,6 +1,6 @@
 import DEMON from './demon.js'
 import { Automation } from './utils.js'
-
+import { createPopper } from '@popperjs/core'
 
 class Cultist {
     constructor(type, promote_from, base_cost, cost_mult) {
@@ -21,8 +21,14 @@ class Cultist {
         let html = document.createElement('div');
         html.id =  this.type;
         html.className = "flex upg";
-        html.innerHTML = '<div class="upg-name">'+ this.type +'</div><div class="upg-lvl">'+ this.level + '</div><button id="' + this.ui_button + '"><span>Hire</span><br/><span class="upg-cost">'+this.base_cost +' power</span></button>';
+        html.innerHTML = '<div class="upg-name">'+ this.type +'</div><div class="upg-lvl">'+ this.level + '</div><div class="btn-wrapper"><button id="' + this.ui_button + '"><span>Hire</span><br/><span class="upg-cost">'+this.base_cost +' power</span></button></div>';
         document.getElementById('upgrades').appendChild(html);
+        document.querySelector('#'+this.type + ' > .btn-wrapper').addEventListener('mouseenter', () => {
+            this.tooltip(true);
+        });
+        document.querySelector('#'+this.type + ' > .btn-wrapper').addEventListener('mouseleave', () => {
+            this.tooltip(false);
+        });
     }
 
     next_level_cost() {
@@ -48,6 +54,30 @@ class Cultist {
 
     disable(bool) {
         document.getElementById(this.ui_button).disabled = bool;
+    }
+
+    tooltip(bool) {
+        if(bool) {
+            let el = document.createElement("div");
+            el.id = "tooltip";
+            el.innerHTML = '<p>' + this.type + " requires:</p>"
+                + '<ul><li>1 '+ this.promote_from +'</li>'
+                + '<li>'+ this.next_level_cost() +' power</li></ul>';
+            document.getElementById('game').append(el);
+            createPopper(document.getElementById(this.ui_button), document.getElementById('tooltip'), {
+                placement: 'right',
+                modifiers: [
+                    {
+                      name: 'offset',
+                      options: {
+                        offset: [0, 8],
+                      },
+                    },
+                  ],
+            });
+        } else {
+            document.getElementById('tooltip').remove();
+        }
     }
 }
 
@@ -194,18 +224,14 @@ class Cult {
     }
 
     render() {
-        document.getElementById('power').innerHTML = Math.round(this.demon.power);
-        document.getElementById('pps').innerHTML = ' ('+this.demon.pps+')';
-        
         this.members["candidate"].disable(this.demon.power < this.members["candidate"].base_cost);
         this.members["adept"].disable(this.demon.power < this.members["adept"].base_cost || this.members["candidate"].total == 0);
-        this.members["recruiter"].disable(this.demon.power < this.members["recruiter"].base_cost || this.members["adept"].level == 0);
-        this.members["ritualist"].disable(this.demon.power < this.members["ritualist"].base_cost || this.members["recruiter"].level == 0);
+        this.members["recruiter"].disable(this.demon.power < this.members["recruiter"].base_cost || this.members["adept"].total == 0);
+        this.members["ritualist"].disable(this.demon.power < this.members["ritualist"].base_cost || this.members["recruiter"].total == 0);
         this.members["candidate"].update_pop();
         this.members["adept"].update_pop();
         this.members["recruiter"].update_pop();
         this.members["ritualist"].update_pop();
-        // document.getElementById('members').innerHTML = Math.round(this.candidates);
         this.demon.render();
 
         document.getElementById('avail_rit').innerHTML = this.allocated_ritualists + ' / ' + this.max_ritualists();
@@ -216,9 +242,9 @@ class Cult {
         this.members["candidate"].automation.update();
         // this.members["candidate"].set_automation(this.members["recruiter"].level >= 1);
         // this.members["candidate"].recruit_progress();
-        this.demon.pps = this.members["adept"].level;
+        this.demon.pps = this.members["adept"].total;
         this.demon.tick(delta);
-        this.candidates += this.members["recruiter"].level*delta;
+        this.candidates += this.members["recruiter"].total*delta;
     }
 }
 

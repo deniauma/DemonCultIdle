@@ -1,12 +1,15 @@
-export class Demon {
+const demon_ranks = ["Lesser Demon", "Demon soldier", "Greater Demon", "Demon count", "Demon Lord", "Arch-demon", "Primordial Demon"];
+
+class Demon {
     constructor() {
         this.rank = 1;
         this.power = 1000;
         this.power_cap = 1000;
         this.pps = 0;
+        this.ppc = 1;
 
         document.getElementById('addpower').addEventListener('click', () => {
-            this.power ++;
+            this.power += this.ppc;
         });
     }
 
