@@ -95,18 +95,22 @@ class Ritual {
     }
 
     effect() {
-        if(this.is_ready()) {
-            DEMON.power -= this.power_cost;
-            CULT.sacrifice(this.sacrifice_type, this.sacrifices);
-            DEMON.power_cap += 10;
-        }
+        
     }
 }
 
 
 class SacrificeI extends Ritual {
     constructor() {
-        super("Human sacrifice", 100, "candidate", 1, 5);
+        super("Sacrifice I", 100, "candidate", 5, 1);
+    }
+
+    effect() {
+        if(this.is_ready()) {
+            DEMON.power -= this.power_cost;
+            CULT.sacrifice(this.sacrifice_type, this.sacrifices);
+            DEMON.ppc += 1;
+        }
     }
 
 }
@@ -114,7 +118,31 @@ class SacrificeI extends Ritual {
 
 class SacrificeII extends Ritual {
     constructor() {
-        super("Adept sacrifice", 500, "adept", 1, 3);
+        super("Sacrifice II", 500, "candidate", 10, 3);
+    }
+
+    effect() {
+        if(this.is_ready()) {
+            DEMON.power -= this.power_cost;
+            CULT.sacrifice(this.sacrifice_type, this.sacrifices);
+            DEMON.power_cap += 10;
+        }
+    }
+
+}
+
+
+class SacrificeIII extends Ritual {
+    constructor() {
+        super("Sacrifice III", 1000, "candidate", 20, 5);
+    }
+
+    effect() {
+        if(this.is_ready()) {
+            DEMON.power -= this.power_cost;
+            CULT.sacrifice(this.sacrifice_type, this.sacrifices);
+            DEMON.power_per_adept += 1;
+        }
     }
 
 }
@@ -127,6 +155,7 @@ class Rituals {
         this.rituals = [];
         this.rituals.push(new SacrificeI());
         this.rituals.push(new SacrificeII());
+        this.rituals.push(new SacrificeIII());
     }
 
     render() {

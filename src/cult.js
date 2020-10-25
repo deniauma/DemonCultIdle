@@ -60,9 +60,13 @@ class Cultist {
         if(bool) {
             let el = document.createElement("div");
             el.id = "tooltip";
-            el.innerHTML = '<p>' + this.type + " requires:</p>"
-                + '<ul><li>1 '+ this.promote_from +'</li>'
-                + '<li>'+ this.next_level_cost() +' power</li></ul>';
+            el.innerHTML = '<p>' + this.type + " requires:</p>";
+            if(this.promote_from != "") {
+                el.innerHTML += '<ul><li>1 '+ this.promote_from +'</li>'
+                    + '<li>'+ this.next_level_cost() +' power</li></ul>';
+            } else {
+                el.innerHTML += '<ul><li>'+ this.next_level_cost() +' power</li></ul>';
+            }
             document.getElementById('game').append(el);
             createPopper(document.getElementById(this.ui_button), document.getElementById('tooltip'), {
                 placement: 'right',
@@ -144,11 +148,11 @@ class Cult {
     constructor() {
         this.demon = DEMON;//new Demon();
         this.members = {};
-        this.members["candidate"] = new Cultist("candidate", "", 5, 1.10);
+        this.members["candidate"] = new Cultist("candidate", "", 10, 1.10);
         // this.members["candidate"].level = 100;
-        this.members["adept"] = new Cultist("adept", "candidate", 20, 1);
-        this.members["recruiter"] = new Cultist("recruiter", "adept", 500, 1);
-        this.members["ritualist"] = new Cultist("ritualist", "recruiter", 1000, 1);
+        this.members["adept"] = new Cultist("adept", "candidate", 20, 1.20);
+        this.members["recruiter"] = new Cultist("recruiter", "adept", 500, 1.20);
+        this.members["ritualist"] = new Cultist("ritualist", "recruiter", 1000, 1.20);
         this.members["ritualist"].level = 10;
         this.allocated_ritualists = 0;
 
@@ -224,10 +228,10 @@ class Cult {
     }
 
     render() {
-        this.members["candidate"].disable(this.demon.power < this.members["candidate"].base_cost);
-        this.members["adept"].disable(this.demon.power < this.members["adept"].base_cost || this.members["candidate"].total == 0);
-        this.members["recruiter"].disable(this.demon.power < this.members["recruiter"].base_cost || this.members["adept"].total == 0);
-        this.members["ritualist"].disable(this.demon.power < this.members["ritualist"].base_cost || this.members["recruiter"].total == 0);
+        this.members["candidate"].disable(this.demon.power < this.members["candidate"].next_level_cost());
+        this.members["adept"].disable(this.demon.power < this.members["adept"].next_level_cost() || this.members["candidate"].total == 0);
+        this.members["recruiter"].disable(this.demon.power < this.members["recruiter"].next_level_cost() || this.members["adept"].total == 0);
+        this.members["ritualist"].disable(this.demon.power < this.members["ritualist"].next_level_cost() || this.members["recruiter"].total == 0);
         this.members["candidate"].update_pop();
         this.members["adept"].update_pop();
         this.members["recruiter"].update_pop();
@@ -244,7 +248,6 @@ class Cult {
         // this.members["candidate"].recruit_progress();
         this.demon.pps = this.members["adept"].total;
         this.demon.tick(delta);
-        this.candidates += this.members["recruiter"].total*delta;
     }
 }
 
